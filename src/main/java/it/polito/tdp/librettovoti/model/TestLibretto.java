@@ -26,6 +26,10 @@ public class TestLibretto {
     
     Voto analisi =librettoo.ricercaCorso("Analisi 1");
     System.out.println(analisi);
+    
+    Voto chimica = librettoo.ricercaCorso("Chimica");
+    Voto chimica_doppio = new Voto("Chimica", 25, LocalDate.of(2019, 7, 15));
+    Voto chimica_conflitto = new Voto("Chimica", 18, LocalDate.of(2019, 7, 15));
 	}
 	
 }

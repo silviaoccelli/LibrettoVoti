@@ -1,18 +1,24 @@
 package it.polito.tdp.librettovoti.model;
 import java.util.List;
+import java.util.Map;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class libretto {
 	
 	private List<Voto> voti;
+	private Map<String, Voto> votiMap; //identity map_ mappa:nome esame ->oggetto voto
 	
 	public libretto() {
 		this.voti = new ArrayList<>(); 
+		this.votiMap=new HashMap<>();
 		
 	}
 	public void add(Voto v) { //aggiunge il voto delega una classe interna a fare l'aggiunta
 		this.voti.add(v);
+		this.votiMap.put(v.getNome(), v);
+		
 	}
 	/*
 	public void stampaVotiUguali(int punteggio) {
@@ -59,15 +65,64 @@ public class libretto {
 	 */
 	
 	public Voto ricercaCorso(String nomeCorso) {
-		Voto risultato=null;
+		/*Voto risultato=null;
 		for(Voto v: this.voti) {
 			if(v.getNome().equals(nomeCorso)) {
 				risultato =v;
 				break;
 			}
 		}
-		return risultato;
+		return risultato;*/
+		return this.votiMap.get(nomeCorso);
 	}
+	/**
+	 * verifica se nel libretto c'è già un voto con lo stesso esame
+	 * e la stessa votazione
+	 * @param v
+	 * @return
+	 */
+	public boolean esisteDuplicato(Voto v) {
+		/*boolean trovato=false;
+		for(Voto voto:this.voti) {
+			if(voto.getNome().equals(v.getNome())&&voto.getVoto()==v.getVoto());
+			trovato=true;
+			break;
+		}
+		}
+		return trovato; */
+		
+		Voto trovato= this.votiMap.get(v.getNome());
+		if(trovato==null)
+			return false;
+		if(trovato.getVoto()==v.getVoto())
+			return true;
+		else 
+			return false;
+	}
+	/**
+	 * verifica se nel libretto c'è già un voto con lo stesso esame
+	 * ma con votazione diversa
+	 * @param v
+	 * @return
+	 */
+   public boolean esisteConflitto(Voto v) {
+	/*	boolean trovato=false;
+		for(Voto voto:this.voti) {
+			if(voto.getNome().equals(v.getNome())&&voto.getVoto()!=v.getVoto());{
+			trovato=true;
+			break;
+		}
+		
+	}
+   
+   return trovato;*/
+	   
+	   Voto trovato = this.votiMap.get(v.getNome());
+	   if(trovato==null)
+		   return false;
+	   else
+		   return true;
+   }
 	
 	
 		public String toString() {
